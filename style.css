@@ -1,0 +1,15 @@
+body {
+	background-color: rgb(222, 227, 223);
+	padding: 2em;
+}
+
+header {
+	border-bottom: 0.3em solid rgb(48, 50, 54);
+}
+
+#fetch-results {
+	border: 1px solid black;
+	min-height: 1em;
+	padding: 0.5em;
+	background-color: beige;
+}
