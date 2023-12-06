@@ -1,0 +1,13 @@
+body {
+	background-color: rgb(231, 201, 155);
+	padding: 2em;
+}
+
+.advice {
+	min-height: 3em;
+	border: 1px solid black;
+	border-radius: 1em;
+	margin-top: 1em;
+	background-color: antiquewhite;
+	padding: 1em;
+}
