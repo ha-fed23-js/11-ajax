@@ -4,8 +4,14 @@ const historyContainer = document.querySelector('.advice-history')
 
 // console.log('DOM', fortuneButton, adviceContainer);
 
+const state = {
+	history: []
+}
 
-
+function addToHistory(slip) {
+	// lägg till slip till history-arrayen
+	// uppdatera DOM-listan <ol>
+}
 
 fortuneButton.addEventListener('click', async () => {
 	// förbered request (URL, inställningar)
