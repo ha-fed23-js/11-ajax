@@ -1,16 +1,28 @@
 const fortuneButton = document.querySelector('#fortune-button')
 const adviceContainer = document.querySelector('.advice')
 const historyContainer = document.querySelector('.advice-history')
+// Kontrollera att vi hittar DOM-elementen med console.log
+// console.log('DOM', fortuneButton, adviceContainer, historyContainer);
 
-// console.log('DOM', fortuneButton, adviceContainer);
-
+// All appens data
 const state = {
 	history: []
 }
 
 function addToHistory(slip) {
 	// lägg till slip till history-arrayen
-	// uppdatera DOM-listan <ol>
+	// uppdatera DOM-listan <ol>  (rendera)
+
+	state.history.unshift(slip)   // använd push i stället om vi vill lägga till sist
+
+	// Vi väljer att rensa och lägga till alla element igen
+	historyContainer.innerHTML = ''
+	state.history.forEach(item => {
+		// Varje item ska vara ett "slip-objekt"
+		const element = document.createElement('li')
+		element.innerText = `${item.id}: ${item.advice}`
+		historyContainer.append(element)
+	})
 }
 
 fortuneButton.addEventListener('click', async () => {
@@ -26,15 +38,9 @@ fortuneButton.addEventListener('click', async () => {
 
 		console.log('Data from API:', data);
 		// Datans format: " { slip: { advice, id } } "
+
 		adviceContainer.innerText = data.slip.advice
-
-		const element = document.createElement('li')
-		element.innerText = `${data.slip.id}: ${data.slip.advice}`
-
-		// historyContainer.append(element) - om man vill lägga till sist
-		const first = historyContainer.children[0]
-		// Alternativ med queryselector: .advice-history > :first-child
-		historyContainer.insertBefore(element, first)
+		addToHistory(data.slip)
 	}
 	catch(error) {
 		console.log('An error occurred! ' + error.message);
