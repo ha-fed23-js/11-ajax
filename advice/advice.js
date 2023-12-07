@@ -1,29 +1,13 @@
+import { addToHistory } from './updateUi.js'
+import { getAdvice } from './ajax.js'
+
 const fortuneButton = document.querySelector('#fortune-button')
 const adviceContainer = document.querySelector('.advice')
 const historyContainer = document.querySelector('.advice-history')
 // Kontrollera att vi hittar DOM-elementen med console.log
 // console.log('DOM', fortuneButton, adviceContainer, historyContainer);
 
-// All appens data
-const state = {
-	history: []
-}
 
-function addToHistory(slip) {
-	// lägg till slip till history-arrayen
-	// uppdatera DOM-listan <ol>  (rendera)
-
-	state.history.unshift(slip)   // använd push i stället om vi vill lägga till sist
-
-	// Vi väljer att rensa och lägga till alla element igen
-	historyContainer.innerHTML = ''
-	state.history.forEach(item => {
-		// Varje item ska vara ett "slip-objekt"
-		const element = document.createElement('li')
-		element.innerText = `${item.id}: ${item.advice}`
-		historyContainer.append(element)
-	})
-}
 
 fortuneButton.addEventListener('click', async () => {
 	// förbered request (URL, inställningar)
@@ -31,16 +15,10 @@ fortuneButton.addEventListener('click', async () => {
 	// vänta på svar
 	// omvandla svar till JS-objekt (via JSON)
 	// visa datan vi fick
-	const url = 'https://api.adviceslip.com/advice'
 	try {
-		const response = await fetch(url)
-		const data = await response.json()
-
-		console.log('Data from API:', data);
-		// Datans format: " { slip: { advice, id } } "
-
-		adviceContainer.innerText = data.slip.advice
-		addToHistory(data.slip)
+		const slip = await getAdvice()
+		adviceContainer.innerText = slip.advice
+		addToHistory(slip, historyContainer)
 	}
 	catch(error) {
 		console.log('An error occurred! ' + error.message);
